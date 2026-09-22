@@ -1,22 +1,20 @@
-{{ define "head" }}
-<meta name="description" content={{ .Site.Params.description }}>
-<link rel="stylesheet" href="{{ (printf "%scss/index.css" (.Site.Params.staticPath | default "")) | relURL }}" media="all">
-<link rel="stylesheet" href="{{ (printf "%scss/projects.css" (.Site.Params.staticPath | default "")) | relURL }}" media="all">
-
-<!-- fontawesome -->
-<script defer src="{{ (printf "%sfontawesome-6/all-6.4.2.js" (.Site.Params.staticPath | default "")) | relURL }}"></script>
-{{ end }}
-
-{{ define "title" }}
-{{ .Site.Title }}
-{{ end }}
-
 {{ define "main" }}
-{{- partial "sections/hero/index.html" . -}}
-{{- partial "sections/about.html" . -}}
-{{- partial "sections/experience.html" . -}}
-{{- partial "sections/education.html" . -}}
-{{- partial "sections/projects.html" . -}}
-{{- partial "sections/achievements.html" . -}}
-{{- partial "sections/contact.html" . -}}
+  <section class="hero">
+    <h2>Selamat Datang di Blog Saya</h2>
+    <!-- Ini akan memanggil isi dari file content/_index.md -->
+    {{ .Content }}
+  </section>
+
+  <section class="recent-posts">
+    <h3>Artikel Terbaru</h3>
+    <ul>
+      <!-- Looping untuk menampilkan artikel terbaru -->
+      {{ range first 3 (where .Site.RegularPages "Type" "posts") }}
+        <li>
+          <a href="{{ .Permalink }}">{{ .Title }}</a>
+          <small>({{ .Date.Format "02 Jan 2006" }})</small>
+        </li>
+      {{ end }}
+    </ul>
+  </section>
 {{ end }}
